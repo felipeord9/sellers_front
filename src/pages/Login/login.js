@@ -51,7 +51,7 @@ export default function Login() {
     }).then(({isConfirmed})=>{
       if(isConfirmed){
         if ("geolocation" in navigator) {
-          navigator.geolocation.watchPosition(
+          navigator.geolocation.getCurrentPosition(
             (position) => {
               // Manejar la posición actual
               setLocation(position.coords);

@@ -7,6 +7,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { getAllDepartamentos } from "../../services/departamentoService";
 import { getAllCiudades } from '../../services/ciudadService'
 import { getAllAgencies } from '../../services/agencyService'
 import { IoIosSend } from "react-icons/io";
@@ -63,6 +64,8 @@ export default function FormVendedor() {
   const [ciudad,setCiudad] = useState('');
   const [agencias,setAgencias] = useState([]);
   const [agencia,setAgencia] = useState('');
+  const [departamento,setDepartamento]= useState('');
+  const [departamentos,setDepartamentos]=useState([]);
 
   const [tipoCliente,setTipoCliente] = useState('Recurrente');
   const [search, setSearch] = useState({
@@ -82,6 +85,7 @@ export default function FormVendedor() {
   useEffect(() => {
     getAllCiudades().then((data)=>setCiudades(data));
     getAllAgencies().then((data)=>setAgencias(data));
+    getAllDepartamentos().then((data) => setDepartamentos(data));
   }, []);
 
   const handlerChangeSearch = (e) => {
@@ -136,6 +140,7 @@ export default function FormVendedor() {
               direccion:search.direccion.toUpperCase(),
               telefono:search.telefono,
               ciudad:ciudad.description,
+              departamento:departamento.description,
               contacto:search.contacto.toUpperCase(),
               correoElectronico:search.correoElectronico.toLocaleLowerCase(),
               motivoVisita:motivoVisita,
@@ -392,7 +397,7 @@ export default function FormVendedor() {
                 </div>
               <div className="row row-cols-sm-2">
                 <div className="d-flex flex-column align-items-start pb-1">
-                  <label style={{fontSize:18}}>Dirección de la Residencia:</label>
+                  <label style={{fontSize:18}}>Dirección:</label>
                   <input
                     id="direccion"
                     type="text"
@@ -422,19 +427,19 @@ export default function FormVendedor() {
               </div>
               
               <div className="row row-cols-sm-2">
-                <div className="d-flex flex-column align-items-start pb-1">
-                  <label style={{fontSize:18}}>Ciudad:</label>
+              <div className="d-flex flex-column align-items-start pb-1">
+                  <label style={{fontSize:18}}>Departamento:</label>
                   <select
                     ref={selectBranchRef}
                     className="form-select form-select-sm"
-                    onChange={(e) => setCiudad(JSON.parse(e.target.value))}
+                    onChange={(e) => setDepartamento(JSON.parse(e.target.value))}
                     style={{height:35,fontSize:18}}
                     required
                   >
                     <option selected value="" disabled>
-                      --- Seleccione La Ciudad Donde Se Encuentra ---
+                      --- Seleccione El Departamento Donde Se Encuentra ---
                     </option>
-                    {ciudades
+                    {departamentos
                       .sort((a, b) => a.id - b.id)
                       .map((elem) => (
                         <option id={elem.id} value={JSON.stringify(elem)}>
@@ -443,6 +448,31 @@ export default function FormVendedor() {
                       ))}
                   </select>
                 </div>
+                <div className="d-flex flex-column align-items-start pb-1">
+                  <label style={{fontSize:18}}>Ciudad:</label>
+                  <select
+                    ref={selectBranchRef}
+                    className="form-select form-select-sm"
+                    onChange={(e) => setCiudad(JSON.parse(e.target.value))}
+                    style={{height:35,fontSize:18}}
+                    required
+                    disabled={departamento ? false : true}
+                  >
+                    <option selected value="" disabled>
+                      --- Seleccione La Ciudad Donde Se Encuentra ---
+                    </option>
+                    {ciudades
+                      .sort((a, b) => a.id - b.id)
+                      .map((elem) => (
+                        elem.id === departamento.id ?
+                        <option id={elem.id} value={JSON.stringify(elem)}>
+                          {elem.description}
+                        </option>
+                        : null
+                      ))}
+                  </select>
+                </div>
+              </div>
                 <div className="d-flex flex-column align-items-start pb-1">
                   <label style={{fontSize:18}}>Nombre de Contacto:</label>
                   <input
@@ -458,7 +488,6 @@ export default function FormVendedor() {
                     required
                   />
                 </div>
-              </div>
               <div className="d-flex flex-column align-items-start pb-1">
                   <label style={{fontSize:18}}>Correo Electrónico:</label>
                   <input

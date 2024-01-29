@@ -19,6 +19,7 @@ export default function Login() {
   useEffect(()=>{
     if(isLogged && user.role==='vendedor')navigate('/formulario/vendedor');
     if(isLogged && user.role==='admin' || isLogged && user.role==='supervisor')navigate('/menu/prinicipal');
+    if(isLogged && user.role==='gps') navigate('/gps')
   },[isLogged,navigate]);
 
   const [info,setInfo]=useState({

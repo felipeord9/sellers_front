@@ -12,6 +12,7 @@ import { getAllCiudades } from '../../services/ciudadService'
 import { getAllAgencies } from '../../services/agencyService'
 import { IoIosSend } from "react-icons/io";
 import { createRegistro , updateRegistro , findRegistros , sendMail , deleteRegistro } from '../../services/registroService'
+import 'sweetalert2/dist/sweetalert2.all'
 
 const backgroundStyle = {
     backgroundImage: 'url("ruta_de_tu_imagen")',

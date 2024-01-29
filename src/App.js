@@ -1,6 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Routes,Route,Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "sweetalert2/dist/sweetalert2.css";
 import { AuthContextProvider } from './context/authContext';
 import PrivateRoute from '../src/components/PrivateRoute'
 import Login from '../src/pages/Login/login'
@@ -15,6 +16,7 @@ import Registros from './pages/registros';
 import MenuPrincipal from './pages/menuPrincipal';
 import GestionarUsers from './pages/GestionarUsers';
 import Mapa from './pages/mapa';
+import Gps from './pages/gps';
 
 function App() {
   return(
@@ -35,6 +37,8 @@ function App() {
         <Route path='/menu/prinicipal' element={<PrivateRoute component={MenuPrincipal}/>}/>
         <Route path='/gestionar/usuarios' element={<PrivateRoute component={GestionarUsers}/>}/>
         <Route path='/mapa' element={<PrivateRoute component={Mapa}/>}/>
+
+        <Route path='/gps' element={<PrivateRoute component={Gps}/>}/>
       </Routes>
       </div>
     </Router>

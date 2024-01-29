@@ -32,7 +32,7 @@ const MapView =()=>{
         }
     })
 
-    return <MapContainer center={state.currentLocation/* {lat:'3.5105353',lng:'-76.5064869'} */} zoom={14} >
+    return <MapContainer center={state.currentLocation/* {lat:'3.5105353',lng:'-76.5064869'} */} zoom={10} >
         <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

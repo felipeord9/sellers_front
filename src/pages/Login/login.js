@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from 'react';
-/* import Logo from '../../assest/logo-gran-langostino.png' */
 import Logo from '../../assest/logo-gran-langostino.png'
 import './login.css';
 import AuthContext from "../../context/authContext";
@@ -8,9 +7,11 @@ import * as Bs from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
 import { Fade } from "react-awesome-reveal";
 import Swal from "sweetalert2";
+import { GiSandsOfTime } from "react-icons/gi";
 
 export default function Login() {
   const {login,isLoginLoading,hasLoginError,isLogged}=useUser()
+  const [loading,setLoading] = useState(false);
   const { user, setUser } = useContext(AuthContext);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -38,6 +39,7 @@ export default function Login() {
   const [location, setLocation] = useState(null);
   const handleLogin=async(e)=>{
     e.preventDefault();
+    setLoading(true)
     Swal.fire({
       title:'¡ATENCION!',
       text:'Esta aplicación solo funcionará si activas tu ubicación, asegurate de que esté activada.',
@@ -62,6 +64,7 @@ export default function Login() {
               localStorage.setItem('latitude',JSON.stringify(latitude))
               localStorage.setItem('longitude',JSON.stringify(longitude))             
               login({email,password})
+              setLoading(false)
             },
             (error) => {
               // Manejar errores, como la denegación de la solicitud de ubicación
@@ -151,7 +154,7 @@ export default function Login() {
         </div>
         <div className='align-content-center text-align-center align-items-center'>
           <center>
-          <button type="submit" ><strong>Entrar</strong></button>
+          <button type="submit" >{loading ? <strong>Cargando... <GiSandsOfTime /></strong>:<strong>Entrar</strong>}</button>
           </center>
         </div>
         <center>

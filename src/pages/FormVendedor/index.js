@@ -140,7 +140,7 @@ export default function FormVendedor() {
               direccion:search.direccion.toUpperCase(),
               telefono:search.telefono,
               ciudad:ciudad.description,
-              departamento:departamento.description,
+              /* departamento:departamento.description, */
               contacto:search.contacto.toUpperCase(),
               correoElectronico:search.correoElectronico.toLocaleLowerCase(),
               motivoVisita:motivoVisita,

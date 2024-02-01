@@ -1,4 +1,6 @@
 import './App.css';
+import Swal from 'sweetalert2';
+import { useState, useContext, useEffect } from "react";
 import { BrowserRouter as Router, Routes,Route,Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "sweetalert2/dist/sweetalert2.css";
@@ -19,6 +21,46 @@ import Mapa from './pages/mapa';
 import Gps from './pages/gps';
 
 function App() {
+
+  useEffect(() => {
+    // Detectar cuando la aplicación se está moviendo a segundo plano
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
+
+  const handleVisibilityChange = () => {
+    if (document.visibilityState === 'hidden') {
+      // La aplicación se está moviendo a segundo plano
+      // Enviar una notificación al usuario
+      sendNotification();
+    }
+  };
+
+  const sendNotification = () => {
+    // Solicitar permiso al usuario para seguir funcionando en segundo plano
+    if ('Notification' in window && Notification.permission !== 'granted') {
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          // El usuario ha concedido permiso
+          // Realizar acciones necesarias para seguir funcionando en segundo plano
+          // Por ejemplo, iniciar un servicio en segundo plano o mantener una conexión abierta
+          Swal.fire({
+            icon:'warning',
+            title:'¡ATENCION!',
+            text:'Se require un permiso para que la app siga funcionando en segundo plano debido a que se debe mantener la conexion con tu ubicacion.',
+            showConfirmButton:true,
+            confirmButtonText:'OK',
+            confirmButtonColor:'#FE5000'
+          })
+          console.log('El usuario ha concedido permiso para seguir funcionando en segundo plano.');
+        }
+      });
+    }
+  };
+
   return(
     <AuthContextProvider>
     <Router>

@@ -11,7 +11,7 @@ export default function Page404() {
       <div >
       <center>
       <label className='' style={{fontSize:120,color:'black'}}>¡¡ERROR!!</label>
-      <h2>404 - page no found</h2>
+      <h2 style={{color:'white'}}>404 - page no found</h2>
       </center>
       </div>
     </div>

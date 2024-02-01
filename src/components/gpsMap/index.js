@@ -7,14 +7,14 @@ import {findRegistros} from '../../services/registroService'
 import L from 'leaflet'
 
 const GpsMap =()=>{
-  /* 
+  /*
     3.509994954062947, -76.50271116816316
     3.503912386997092, -76.50588690372348
     3.4995003593801286, -76.50695978735872
     3.4936319021054496, -76.50893389324756
   */
 
-    /* 
+    /*
     3.46599401287944, -76.521362722966
     3.4632462519656526, -76.52075099142638
     3.4626356373460223, -76.52174505517829
@@ -54,7 +54,7 @@ const GpsMap =()=>{
     [3.4471411597975883 , -76.48397063260553],
     [3.4471411597975883 , -76.48358830039327],  // Punto 3
   ]; */
-  /* const [posicion, setPosicion] = useState([0, 0]);
+  const [posicion, setPosicion] = useState([0, 0]);
   const [ruta, setRuta] = useState([]);
   useEffect(() => {
     const interval = setInterval(() => {
@@ -68,10 +68,10 @@ const GpsMap =()=>{
         error => console.error(error),
         { enableHighAccuracy: true }
       );
-    }, 300);
+    }, 100);
 
     return () => clearInterval(interval);
-  }, []); */
+  }, []);
   const IconLocation = L.icon({
     iconUrl: require('../../assest/ubicacion.png'),
     iconRetinaUrl: require('../../assest/ubicacion.png'),
@@ -104,13 +104,13 @@ const GpsMap =()=>{
     return () => {
       clearInterval(intervalId);
     };
-    
+
   }, []); */
-useEffect(()=>{
+/* useEffect(()=>{
   const interval = setInterval(()=>{
     navigator.geolocation.getCurrentPosition(
       position =>{
-        setUserLocation([position.coords.latitude, position.coords.longitude]); 
+        setUserLocation([position.coords.latitude, position.coords.longitude]);
       },
       error =>{
         console.error('Error getting geolocation:', error);
@@ -118,7 +118,7 @@ useEffect(()=>{
     );
   },300)
   return ()=>clearInterval(interval)
-},[])
+},[])*/
       const [state,setState] = useState({
         currentLocation:{lat:'3.4512653723079487',lng:'-76.53013093778655'}
         //3.4512653723079487, -76.53013093778655
@@ -127,16 +127,17 @@ useEffect(()=>{
         <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />   
-        {/* <Polyline weight={7} positions={ruta} color="blue"/> */}
-        {userLocation && (
+        />
+        <Polyline weight={7} positions={ruta} color="blue"/>
+        {/*{userLocation && (
           <Marker position={userLocation} icon={IconLocation}>
             <Popup>Ubicación actual</Popup>
           </Marker>
-        )}
+        )}*/}
         {/* <Markers places = {ruta}/> */}
         {/* {ruta} */}
-        {userLocation}
+        {/*{userLocation}*/}
     </MapContainer>
 }
 export default GpsMap
+

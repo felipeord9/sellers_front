@@ -193,7 +193,7 @@ export default function Navbar() {
                       </center>
                     </Box>
                   </Modal>               
-              {/* <span className="m-0">Gran Langostino S.A.S</span> */}
+              <span className="m-0">Gran Langostino S.A.S</span>
               </li>
             </ul>
           </nav>

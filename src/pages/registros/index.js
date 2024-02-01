@@ -51,24 +51,63 @@ export default function Terceros() {
     initialDate: null,
     finalDate: null,
   });
+  const [filteredData,setFilteredData] =useState ([]);
 
   const getFilteredOrders = () => {
-    if (filterDate.initialDate && filterDate.finalDate) {
-      const initialDate = new Date(filterDate.initialDate.split('-').join('/')).toLocaleDateString();
-      const finalDate = new Date(filterDate.finalDate.split('-').join('/')).toLocaleDateString();
+    if (filterDate.initialDate && filterDate.finalDate && search==="") {
+      const nexDay = new Date(filterDate.initialDate);
+      nexDay.setDate(nexDay.getDate()+1);
+      const initialDate = nexDay.toLocaleDateString();
+
+      const next = new Date(filterDate.finalDate);
+      next.setDate(next.getDate()+1);
+      const finalDate= next.toLocaleDateString();
+      /* const initialDate = new Date(filterDate.initialDate).toLocaleDateString();
+      const finalDate = new Date(filterDate.finalDate).toLocaleDateString(); */
       const filteredOrders = registros.filter((elem) => {
         const splitDate = new Date(elem.fechaCreacion).toLocaleDateString();
-        if (splitDate >= initialDate && splitDate <= finalDate) {
+        if ((splitDate >= initialDate) && (splitDate <= finalDate)) {
           return elem;
         }
+        /* if(initialDate===finalDate && initialDate === splitDate){
+          return elem
+        } */
         return 0;
       });
 
       setFilteredData(filteredOrders);
     }
-  };
+    if (filterDate.finalDate==="" && filterDate.initialDate==="" && search !==""){
+      const filteredRegistros = registros.filter((elem) => {
+        const elemento = elem.usuarioCreador.toUpperCase()
+        if(      
+          elemento.includes(search.toUpperCase())
+        ) {
+          return elem
+        }
+      })
+      setFilteredData(filteredRegistros);
+    }
+    if(filterDate.finalDate !=="" && filterDate.initialDate !=="" && search !==""){
+      const nexDay = new Date(filterDate.initialDate);
+      nexDay.setDate(nexDay.getDate()+1);
+      const initialDate = nexDay.toLocaleDateString();
 
-  const [filteredData,setFilteredData] =useState ([])
+      const next = new Date(filterDate.finalDate);
+      next.setDate(next.getDate()+1);
+      const finalDate= next.toLocaleDateString();
+
+      
+      const filtro = registros.filter((item)=>{
+        const elemento = item.usuarioCreador.toUpperCase()
+        const splitDate = new Date(item.fechaCreacion).toLocaleDateString();
+        if((splitDate >= initialDate) && (splitDate <= finalDate) && (elemento.includes(search.toUpperCase()))){
+          return item
+        }
+      })
+      setFilteredData(filtro)
+    }
+  };
 
   const handleChangeFilterDate = (e) => {
     const { id, value } = e.target;
@@ -79,9 +118,10 @@ export default function Terceros() {
   };
   const removeFilterDate = () => {
     setFilterDate({
-      initialDate: 0,
-      finalDate: 0,
+      initialDate: "",
+      finalDate: "",
     });
+    setSearch("");
     getAllTerceros();
   };
   useEffect(() => {
@@ -166,6 +206,7 @@ export default function Terceros() {
             className="form-control form-control-sm rounded-2"
             placeholder="Buscar por Vendedor"
             onChange={searchRegistros}
+            /* onChange={(e)=>setSearch(e)} */
             style={{fontSize:20}}
           />
           <div className="btn-group dropdown">
@@ -189,15 +230,15 @@ export default function Terceros() {
               <span className="visually-hidden rounded rounded-2">Toggle Dropdown</span>
             </button>
             <ul className="dropdown-menu p-0 m-0" aria-labelledby="dropdownMenuButton">
-              <li className="d-flex w-100 form-control form-control-sm justify-content-center" style={{fontSize:16,backgroundColor:'#FE5000',color:'white'}}><strong>Buscar Por Fecha</strong></li>
+              <li className="d-flex w-100 form-control form-control-sm justify-content-center" style={{fontSize:16,backgroundColor:'#FE5000',color:'white'}}><strong>Filtrar Por Fecha</strong></li>
               <li className="d-flex flex-row gap-2 ">
                 <input
                   id="initialDate"
                   type="date"
-                  value={filterDate.initialDate}
+                  value={(filterDate.initialDate)}
                   className="form-control form-control-sm dropdown-item"
                   max={filterDate.finalDate}
-                  onChange={handleChangeFilterDate}
+                  onChange={(e)=>(handleChangeFilterDate(e))}
                   style={{fontSize:18}}
                 />
                 -
@@ -211,24 +252,43 @@ export default function Terceros() {
                   style={{fontSize:18}}
                 />
               </li>
-              <li className="d-flex flex-row gap-3 mt-1 mb-1 w-100">
+              <li className="d-flex justify-content-center gap-3 mt-2  mb-2 w-100">
                 <button
                   className="btn btn-sm btn-primary w-50 ms-2"
                   onClick={getFilteredOrders}
                   style={{fontSize:18}}
                 >
-                  Filtrar
+                  <strong>Filtrar</strong>
                 </button>
                 <button
-                  className="btn btn-sm btn-danger w-50 me-2"
+                  className="btn btn-sm btn-danger w-50  me-3 "
                   onClick={removeFilterDate}
                   style={{fontSize:18}}
                 >
-                  Borrar Filtro
+                  <strong>Borrar Filtro</strong>
                 </button>
               </li>
             </ul>
           </div>
+          {/* <div>
+            <button
+              title="Filtrar"
+              className="btn btn-sm ps-3 pe-3 p-2 btn-success"
+              onClick={getFilteredOrders}
+              style={{fontSize:18}}
+            >
+              <strong>Filtrar</strong>
+            </button>
+          </div> */}
+          {/* <div>
+            <button
+              className="btn btn-sm btn-danger me-2"
+              onClick={removeFilterDate}
+              style={{fontSize:18}}
+            >
+              Borrar
+            </button>
+          </div> */}
           <div>
             <button
              title="Ver Recorrido"
@@ -249,6 +309,7 @@ export default function Terceros() {
                 <StyledTableCell style={{fontSize:18}}>Creador</StyledTableCell>
                 <StyledTableCell style={{fontSize:18}}>Longitud</StyledTableCell>
                 <StyledTableCell style={{fontSize:18}}>Latitud</StyledTableCell>
+                {/* <StyledTableCell style={{fontSize:18}}>xxxxx</StyledTableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -262,8 +323,14 @@ export default function Terceros() {
                   <StyledTableCell style={{fontSize:18, width:150}}>{row.usuarioCreador}</StyledTableCell>
                   <StyledTableCell style={{fontSize:18, width:120}}>{row.longitud}</StyledTableCell>
                   <StyledTableCell style={{fontSize:18, width:120}}>{row.latitud}</StyledTableCell>
+                  {/* <StyledTableCell style={{fontSize:18, width:120}}>{row.fechaCreacion}</StyledTableCell> */}
                 </StyledTableRow>
               ))}
+              {filteredData.length===0 &&(
+                <StyledTableRow>
+                  <StyledTableCell className="d-flex w-100 justify-content-center" style={{fontSize:18}}><strong>NO HAY REGISTROS</strong></StyledTableCell>
+                </StyledTableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>

@@ -19,10 +19,11 @@ import MenuPrincipal from './pages/menuPrincipal';
 import GestionarUsers from './pages/GestionarUsers';
 import Mapa from './pages/mapa';
 import Gps from './pages/gps';
+import ViewGps from './pages/gpsView';
 
 function App() {
 
-  useEffect(() => {
+  /* useEffect(() => {
     // Detectar cuando la aplicación se está moviendo a segundo plano
     document.addEventListener('visibilitychange', handleVisibilityChange);
 
@@ -59,7 +60,7 @@ function App() {
         }
       });
     }
-  };
+  }; */
 
   return(
     <AuthContextProvider>
@@ -81,6 +82,7 @@ function App() {
         <Route path='/mapa' element={<PrivateRoute component={Mapa}/>}/>
 
         <Route path='/gps' element={<PrivateRoute component={Gps}/>}/>
+        <Route path='/view' element={<PrivateRoute component={ViewGps}/>}/>
       </Routes>
       </div>
     </Router>

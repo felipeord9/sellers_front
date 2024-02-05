@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect , useContext } from "react";
 import * as GoIcons from "react-icons/go"
 import TableRegistros from "../../components/tablaRegistros"
 import { findRegistros } from "../../services/registroService"
@@ -19,6 +19,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import { FaEye } from "react-icons/fa";
+import AuthContext from "../../context/authContext";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -46,6 +47,7 @@ export default function Terceros() {
   const [suggestions, setSuggestions] = useState([])
   const [search, setSearch] = useState('')
   const navigate =useNavigate()
+  const { user, setUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(false)
   const [filterDate, setFilterDate] = useState({
     initialDate: null,
@@ -132,10 +134,26 @@ export default function Terceros() {
     setLoading(true)
     findRegistros()
       .then(({ data }) => {
-        setRegistros(data)
+        if(user.role === 'admin'){
+          setRegistros(data)
+          setSuggestions(data)
+          setFilteredData(data)
+          setLoading(false)
+        }else{
+          const filtro = data.filter((element)=>{
+            if(user.name === element.centroDeOperacion){
+              return element
+            }
+          })
+          setRegistros(filtro)
+          setSuggestions(filtro)
+          setFilteredData(filtro)
+          setLoading(false)
+        }
+        /* setRegistros(data)
         setSuggestions(data)
         setFilteredData(data)
-        setLoading(false)
+        setLoading(false) */
       })
       .catch((error) => {
         setLoading(false)
@@ -197,7 +215,7 @@ export default function Terceros() {
       <div className="login-wrapper w-100 h-100 d-flex flex-row gap-2">
         <div className="container w-100 h-100 d-flex flex-column gap-2">
       <center>
-      <h1 className=" fw-bold mt-3" style={{color:'#FE5000'}}>Listado de Visitas registrados</h1>
+      <h1 className=" fw-bold mt-3" style={{color:'#FE5000'}}>Listado de Visitas registradas</h1>
       </center>
         <div className="d-flex justify-content-center gap-3 mb-1">
           <input
@@ -323,7 +341,7 @@ export default function Terceros() {
                   <StyledTableCell style={{fontSize:18, width:150}}>{row.usuarioCreador}</StyledTableCell>
                   <StyledTableCell style={{fontSize:18, width:120}}>{row.longitud}</StyledTableCell>
                   <StyledTableCell style={{fontSize:18, width:120}}>{row.latitud}</StyledTableCell>
-                  {/* <StyledTableCell style={{fontSize:18, width:120}}>{row.fechaCreacion}</StyledTableCell> */}
+                  {/* <StyledTableCell style={{fontSize:18, width:120}}>{row.centroDeOperacion}</StyledTableCell> */}
                 </StyledTableRow>
               ))}
               {filteredData.length===0 &&(

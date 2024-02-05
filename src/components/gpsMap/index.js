@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , useContext} from "react";
 import 'leaflet/dist/leaflet.css'
 import { useLocation } from "react-router-dom";
 import {MapContainer, TileLayer, Polyline , Marker , Popup  } from 'react-leaflet'
 import Markers from "../markers";
 import {findRegistros} from '../../services/registroService'
 import L from 'leaflet'
+import { sendCoordenadas } from '../../services/gpsService'
+import AuthContext from "../../context/authContext";
+import axios from "axios";
+import { config } from '../../config';
+
+const url = `${config.apiUrl2}/gps`
 
 const GpsMap =()=>{
   /*
@@ -13,7 +19,6 @@ const GpsMap =()=>{
     3.4995003593801286, -76.50695978735872
     3.4936319021054496, -76.50893389324756
   */
-
     /*
     3.46599401287944, -76.521362722966
     3.4632462519656526, -76.52075099142638
@@ -56,6 +61,7 @@ const GpsMap =()=>{
   ]; */
   const [posicion, setPosicion] = useState([0, 0]);
   const [ruta, setRuta] = useState([]);
+  const { user, setUser } = useContext(AuthContext);
   useEffect(() => {
     const interval = setInterval(() => {
       navigator.geolocation.getCurrentPosition(
@@ -64,6 +70,8 @@ const GpsMap =()=>{
           const nuevaPosicion = [latitude, longitude];
           setPosicion(nuevaPosicion);
           setRuta(prevRuta => [...prevRuta, nuevaPosicion]);
+          const coordenadas=`${position.coords.latitude},${position.coords.longitude}`
+          sendCoordenadas(coordenadas);
         },
         error => console.error(error),
         { enableHighAccuracy: true }

@@ -12,39 +12,35 @@ const Markers = ({places}) =>{
             setPuntos(JSON.parse(data));
         }
     })
+
+    const modificarFecha=({fecha})=>{
+        const date = new Date(fecha).toLocaleDateString()
+        const hora = new Date(fecha).toLocaleTimeString()
+        return `${date} ${hora}`
+    }
+
     const markers = places.map((item,i)=>( 
         <Marker
             key={i}
             position={{lat:item.latitud,lng:item.longitud}}
-            /* position={[place.latitud,place.longitud]} */
-            /* position={{lat:'3.5105353',lng:'-76.5064869'}} */
             icon={IconLocation}
-        ></Marker>
-
+        >
+            <Popup>
+                <div className="d-flex flex-column">
+                   <strong style={{textTransform:'uppercase'}}>{item.razonSocial}</strong>
+                    <label className="d-flex"><strong className="d-flex me-1">Creador:</strong>{item.usuarioCreador}</label>
+                    <div className="d-flex">
+                        <label className="me-1"><strong>Fecha:</strong></label>
+                        <label className="me-2">{new Date(item.fechaCreacion).toLocaleDateString()}</label>
+                    </div>
+                        <label><strong className="me-1">Hora:</strong>{new Date(item.fechaCreacion).toLocaleTimeString()}</label>
+                </div>
+            </Popup>
+        </Marker>
     ))
-    return markers/* (
-        <div>
-        {puntos.map((item)=>{
-            <Marker
-                
-                position={{lat:'3.5105353',lng:'-76.5064869'}}
-                icon={IconLocation}
-            ></Marker>
-        })}
-        </div>
-        ) */
+    return markers
     }
     export default Markers
-
-    /* key={i} */
-                /* position={{lat:item.latitud,lng:item.longitud}} */
-                /* position={[place.latitud,place.longitud]} */
-
-    {/* <Marker
-    
-        position={{lat:'3.5105353',lng:'-76.5064869'}}
-        icon={IconLocation}
-    ></Marker> */}
 
 //3.4877530785058166, -76.51706596838137
 //3.492465010924786, -76.50977035966173

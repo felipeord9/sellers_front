@@ -34,6 +34,7 @@ const Markers = ({places}) =>{
                         <label className="me-2">{new Date(item.fechaCreacion).toLocaleDateString()}</label>
                     </div>
                         <label><strong className="me-1">Hora:</strong>{new Date(item.fechaCreacion).toLocaleTimeString()}</label>
+                    <label><strong>Motivo:</strong></label>{item.motivoVisita}
                 </div>
             </Popup>
         </Marker>

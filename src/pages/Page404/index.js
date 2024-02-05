@@ -1,19 +1,17 @@
 /* import Error from '../../assest/error-404.jpg' */
-/* import Logo from '../../assest/logo-gran-langostino.png' */
- 
+import Logo from '../../assest/logo-gran-langostino.png'
+import './styles.css' 
 
 export default function Page404() {
   return (
-    <div className=" wrapper d-flex flex-row justify-content-center align-items-center vh-100 w-100 m-auto">
+    <div className=" wrapper d-flex justify-content-center align-items-center vh-100 w-100 m-auto " style={{userSelect:'none'}}>
       <div className='rounder-4'>
-      <div className='d-flex flex-row p-2 m-2'>
+      <div className='login-wrapper ' style={{backgroundColor:''}}>
       {/* <img src={Logo} alt=''/> */}
-      <div >
+      <h1 className="error" >¡¡ERROR!!</h1>
       <center>
-      <label className='' style={{fontSize:120,color:'black'}}>¡¡ERROR!!</label>
-      <h2 style={{color:'white'}}>404 - page no found</h2>
+      <h2 className="text w-100 justify-content-center" >404 - page no found</h2>
       </center>
-      </div>
     </div>
     </div>
     </div>

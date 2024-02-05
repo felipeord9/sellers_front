@@ -35,12 +35,17 @@ function ViewGps() {
     }
   })
 
-  /* useEffect(()=>{
+  useEffect(()=>{
     obtenerRuta()
     .then(({data})=>{
-      setCoordenadas(data)
+      const filtro = data.filter((item)=>{
+        if(item[0]!==null && item[1]!==null){
+          return item
+        }
+      })
+      setCoordenadas(filtro)
     })
-  },[]) */
+  },[])
   /* useEffect(() => {
     const fetchCoordinates = async () => {
       try {
@@ -54,30 +59,30 @@ function ViewGps() {
 
     fetchCoordinates();
   }, []); */
-
+//4.711923546299663, -74.07280335337589
   return (
     <div className='wrapper w-100 h-100 justify-content-center d-flex flex-column pt-5'>
-        <MapContainer center={{lat:'3.4512653723079487',lng:'-76.53013093778655'}} zoom={10}>
+        <MapContainer center={{lat:'4.711923546299663',lng:'-74.07280335337589'}} zoom={6}>
             <TileLayer 
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
-            <Polyline weight={6} positions={coordinates} color='green' />
-            {coordinates.map((item,i)=>{
+            <Polyline weight={7} positions={coordenadas} color='green' />
+            {coordenadas.map((item,i)=>{
               <Marker 
                 key={i}
-                position={{lat:item.latitud,lng:item.longitud}}
+                position={item}
                 icon={IconLocation}
                 />
             })}
         </MapContainer>
-        <div style={{backgroundColor:'white'}}>
+        {/* <div style={{backgroundColor:'white'}}>
           <ul>
-          {coordinates.map((coord, index) => (
-            <li key={index}>{`Latitud: ${coord.latitud}, Longitud: ${coord.longitud}`}</li>
+          {coordenadas.map((coord, index) => (
+            <li key={index}>{`Latitud: ${coord[0]}, Longitud: ${coord[1]}`}</li>
           ))}
         </ul>
-        </div>
+        </div> */}
     </div>
   )
 }

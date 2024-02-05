@@ -20,8 +20,9 @@ const MapView =()=>{
         })
     },[])
     const [state,setState] = useState({
-        currentLocation:{lat:'3.4512653723079487',lng:'-76.53013093778655'}
+        currentLocation:{lat:'4.711923546299663',lng:'-74.07280335337589'}
         //3.4512653723079487, -76.53013093778655
+        //4.711923546299663, -74.07280335337589
     })
 
     const[route,setRoute] = useState([])
@@ -32,7 +33,7 @@ const MapView =()=>{
         }
     })
 
-    return <MapContainer center={state.currentLocation/* {lat:'3.5105353',lng:'-76.5064869'} */} zoom={10} >
+    return <MapContainer center={state.currentLocation/* {lat:'3.5105353',lng:'-76.5064869'} */} zoom={6} >
         <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

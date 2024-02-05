@@ -322,11 +322,13 @@ export default function Terceros() {
             <TableHead>
               <TableRow >
                 <StyledTableCell style={{fontSize:18}} className="d-flex justify-content-center">NIT</StyledTableCell>
-                <StyledTableCell style={{fontSize:18,width:260}}>RazonSocial</StyledTableCell>
+                <StyledTableCell style={{fontSize:18,width:230}}>RazonSocial</StyledTableCell>
                 <StyledTableCell style={{fontSize:18}}>Motivo</StyledTableCell>
                 <StyledTableCell style={{fontSize:18}}>Creador</StyledTableCell>
                 <StyledTableCell style={{fontSize:18}}>Longitud</StyledTableCell>
                 <StyledTableCell style={{fontSize:18}}>Latitud</StyledTableCell>
+                <StyledTableCell style={{fontSize:18}}>Fecha/Hora</StyledTableCell>
+                <StyledTableCell style={{fontSize:18}}>Notas</StyledTableCell>
                 {/* <StyledTableCell style={{fontSize:18}}>xxxxx</StyledTableCell> */}
               </TableRow>
             </TableHead>
@@ -338,9 +340,11 @@ export default function Terceros() {
                   </StyledTableCell>
                   <StyledTableCell style={{fontSize:18}}>{row.razonSocial}</StyledTableCell>
                   <StyledTableCell style={{fontSize:18}}>{row.motivoVisita}</StyledTableCell>
-                  <StyledTableCell style={{fontSize:18, width:150}}>{row.usuarioCreador}</StyledTableCell>
+                  <StyledTableCell style={{fontSize:18, width:140}}>{row.usuarioCreador}</StyledTableCell>
                   <StyledTableCell style={{fontSize:18, width:120}}>{row.longitud}</StyledTableCell>
                   <StyledTableCell style={{fontSize:18, width:120}}>{row.latitud}</StyledTableCell>
+                  <StyledTableCell style={{fontSize:18, width:150}}>{new Date(row.fechaCreacion).toLocaleDateString()} {new Date(row.fechaCreacion).toLocaleTimeString()}</StyledTableCell>
+                <StyledTableCell style={{fontSize:18}}>{row.notas}</StyledTableCell>
                   {/* <StyledTableCell style={{fontSize:18, width:120}}>{row.centroDeOperacion}</StyledTableCell> */}
                 </StyledTableRow>
               ))}

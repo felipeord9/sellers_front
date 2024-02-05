@@ -1,13 +1,35 @@
-.imagen{
-    /* background-image: url('../../assest/error-404.jpg'); */
-    background-blend-mode: overlay;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: 100% 100%;
-      background-position: center;
-      align-content: center;
-      align-items: center;
+.error {
+    font-size: 120px;
+    color: white; /* Tamaño de texto base */
+  }
+  
+  /* Media query para pantallas más pequeñas */
+  @media (max-width: 768px) {
+    .error {
+      font-size: 76px; /* Reducir el tamaño del texto para pantallas más pequeñas */
+    }
+  }
+  
+  /* Media query para pantallas más pequeñas aún */
+  @media (max-width: 480px) {
+    .error {
+      font-size: 65px; /* Reducir aún más el tamaño del texto para pantallas más pequeñas */
+    }
+  }
+
+.text{
+    font-size: 40px;
+    color: white;
 }
-label{
-    font-size: 50;
-}
+@media (max-width: 768px) {
+    .text {
+      font-size: 38px; /* Reducir el tamaño del texto para pantallas más pequeñas */
+    }
+  }
+  
+  /* Media query para pantallas más pequeñas aún */
+  @media (max-width: 480px) {
+    .text {
+      font-size: 36px; /* Reducir aún más el tamaño del texto para pantallas más pequeñas */
+    }
+  }
